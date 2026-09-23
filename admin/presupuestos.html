@@ -1,3 +1,36 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Admin - B&P</title><link rel="stylesheet" href="../css/estilos.css"></head>
-<body onload="requireUser('admin')"><header class="header"><div class="topbar"><a class="brand" href="presupuestos.html"><img src="../img/logo.jpeg"><div><h1>B&P Sanitarios</h1><small>Administrador</small></div></a><button class="btn btn-red" onclick="logout()">Cerrar sesión</button></div></header>
-<main class="container"><div class="layout admin-layout"><aside class="card side"><ul><li><a class="active" href="presupuestos.html">Presupuestos</a></li><li><a href="../productos.html">Ver tienda</a></li></ul></aside><section class="card"><h2>Presupuestos recibidos</h2><p class="muted">Acá cambiás el estado: Pendiente, Preparado, Entregado o Cancelado.</p><br><div id="adminQuotes"></div></section><section class="card"><div class="section-title"><div><h2>Modificar productos</h2><p class="muted">Solo el administrador puede cambiar precio, stock, ofertas y descuentos.</p></div><button class="btn btn-light" onclick="resetProducts()">Restaurar productos</button></div><hr class="linea-roja"><div id="adminProducts" class="admin-products-grid"></div></section></div></main><script src="../js/app.js"></script></body></html>
+<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff"><title>Administración | NDB</title><link rel="stylesheet" href="../css/estilos.css"></head><body><header class="header"><div class="topbar"><a class="brand" href="presupuestos.html"><img src="../img/logo-completo.jpg"><div><h1>NDB Sanitarios</h1><small>Administración</small></div></a><button class="btn btn-red" onclick="logout()">Cerrar sesión</button></div></header><main class="container"><div class="layout admin-layout"><aside class="card side"><button class="active" data-section="dashboard" onclick="showAdminSection('dashboard')">Resumen</button><button data-section="orders" onclick="showAdminSection('orders')">Pedidos</button><a href="productos.html">Productos</a><a href="clientes.html">Clientes</a></aside><div>
+<section id="dashboard" class="card admin-section"><h2>Resumen</h2><div class="stats"><div class="stat"><span id="statPending">0</span><b>Pendientes</b></div><div class="stat"><span id="statPrepared">0</span><b>Preparados</b></div><div class="stat"><span id="statDelivered">0</span><b>Entregados</b></div><div class="stat"><span id="statTotal">$ 0</span><b>Total pedidos</b></div></div></section>
+<section id="orders" class="card admin-section hidden"><div class="section-title"><div><h2>Pedidos</h2><p class="muted">El cliente puede cancelar un pedido mientras esté Pendiente. Para cambiar productos o cantidades debe generar un pedido nuevo.</p></div></div><div class="filters"><input id="adminOrderSearch" class="field" placeholder="Buscar pedido o cliente..." oninput="renderAdminOrders()"><select id="adminStatusFilter" class="field" onchange="renderAdminOrders()"><option>Todos</option><option>Pendiente</option><option>Preparado</option><option>Entregado</option><option>Cancelado</option></select></div><div id="adminQuotes"></div></section>
+<section id="productsAdmin" class="card admin-section hidden"><div class="section-title"><div><h2>Productos y stock</h2><p class="muted">Agregá productos nuevos y administrá precio, stock, foto y ofertas.</p></div></div>
+<div class="admin-create-box"><h3>Agregar producto</h3><div class="admin-form-grid">
+<input id="newProductCode" class="field" placeholder="Código *">
+<input id="newProductName" class="field" placeholder="Nombre del producto *">
+<select id="newProductBrand" class="field"></select>
+<select id="newProductCategory" class="field"></select>
+<input id="newProductPrice" class="field" type="number" min="0" step="0.01" placeholder="Precio *">
+<input id="newProductStock" class="field" type="number" min="0" step="1" placeholder="Stock *">
+<input id="newProductMinStock" class="field" type="number" min="0" step="1" placeholder="Stock mínimo">
+<input id="newProductPreviousPrice" class="field" type="number" min="0" step="0.01" placeholder="Precio anterior (opcional)">
+<div class="admin-span-2 image-upload-box"><label for="newProductImage" class="upload-label">Foto del producto</label><input id="newProductImage" class="file-input" type="file" accept="image/*" onchange="previewProductImage(this)"><div class="upload-help">Elegí una foto desde tu computadora o celular.</div><div id="newProductImagePreviewWrap" class="image-preview-wrap hidden"><img id="newProductImagePreview" alt="Vista previa"><button type="button" class="btn btn-light btn-small" onclick="clearProductImage()">Quitar foto</button></div></div>
+<textarea id="newProductDescription" class="field admin-span-2" rows="3" placeholder="Descripción (opcional)"></textarea>
+</div><div class="check-row"><label><input id="newProductSale" type="checkbox"> Oferta</label></div><button id="createProductBtn" class="btn btn-red" onclick="createAdminProduct()">+ Agregar producto</button></div>
+<hr class="linea-roja">
+      <div class="admin-product-tools">
+        <div><label for="adminProductSearch">Buscar producto</label><input id="adminProductSearch" class="field" placeholder="Nombre o código..." oninput="paintAdminProducts()"></div>
+        <div><label for="adminProductSort">Ordenar</label><select id="adminProductSort" class="field" onchange="paintAdminProducts()"><option value="name-asc">Nombre A–Z</option><option value="name-desc">Nombre Z–A</option><option value="code-asc">Código</option></select></div>
+      </div><div id="adminProducts" class="admin-products-grid"></div></section>
+<section id="clients" class="card admin-section hidden"><div class="section-title"><div><h2>Clientes</h2><p class="muted">Creá la cuenta del cliente desde administración. No hay registro público.</p></div></div>
+<div class="admin-create-box"><h3>Agregar cliente</h3><p class="muted">La cuenta se crea directamente desde este panel. No hace falta entrar a Firebase.</p><div class="admin-form-grid">
+<input id="newClientBusiness" class="field" placeholder="Razón social *">
+<input id="newClientName" class="field" placeholder="Nombre y apellido">
+<input id="newClientEmail" class="field" type="email" autocomplete="off" placeholder="Email *">
+<input id="newClientPassword" class="field" type="password" minlength="8" autocomplete="new-password" placeholder="Contraseña inicial * (mín. 8)">
+<input id="newClientPhone" class="field" placeholder="Teléfono">
+<input id="newClientCity" class="field" placeholder="Localidad">
+<input id="newClientDiscount" class="field" type="number" min="0" max="100" step="0.01" value="0" placeholder="Descuento %">
+</div><button id="createClientBtn" class="btn btn-red" onclick="createClient()">+ Agregar cliente</button></div>
+<hr class="linea-roja"><div id="adminClients"></div></section>
+</div></div></main><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script><script src="../js/config.js"></script><script src="../js/firebase.js"></script><script src="../js/app.js"></script></body></html>

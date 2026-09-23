@@ -1,11 +1,63 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>B&P Sanitarios</title><link rel="stylesheet" href="css/estilos.css"></head><body>
-<div class="promo-bar">🚚 Envíos en Zona Sur | 💰 Precios mayoristas | 📦 Stock disponible</div>
-<header class="header"><div class="topbar"><button class="hamb" onclick="toggleMobile()">☰</button><a class="brand" href="index.html"><img src="img/logo.jpeg"><div><h1>B&P Sanitarios</h1><small>Distribuidora Mayorista</small></div></a><div class="search"><input id="search" placeholder="Buscar productos..." oninput="renderProducts()"><button>⌕</button></div><div class="actions"><a href="login.html" class="btn btn-light">Mi cuenta</a><a href="carrito.html" class="btn btn-red cart-link">🛒 <span class="cart-count">0</span></a></div></div></header>
-<div id="mobileMenu" class="mobile-menu"><div class="mobile-panel"><button class="btn btn-red" onclick="toggleMobile()">Cerrar ×</button><a href="index.html">Inicio</a><a href="productos.html">Productos</a><a href="carrito.html">Carrito</a><a href="login.html">Mi cuenta</a></div></div>
-<main class="container">
-<section class="card hero"><div><h2>🔥 Ofertas de la semana</h2><p>Repuestos y accesorios sanitarios para ferreterías, corralones, plomeros y clientes mayoristas.</p><div class="hero-benefits"><span>🚚 Envíos</span><span>💰 Precios mayoristas</span><span>📦 Stock permanente</span><span>🔧 Primeras marcas</span></div><a class="btn btn-red" href="productos.html">Ver productos</a></div><img src="img/logo.jpeg"></section>
-<section class="beneficios"><div class="beneficio"><b>🚚 Reparto</b><span>Zona Sur del AMBA</span></div><div class="beneficio"><b>💳 Presupuesto online</b><span>Armá tu carrito y consultá</span></div><div class="beneficio"><b>🏪 Venta mayorista</b><span>Ferreterías y corralones</span></div><div class="beneficio"><b>📦 Stock actualizado</b><span>Controlado por el admin</span></div></section>
-<section class="ofertas-home"><h2>🔥 Productos en oferta</h2><p class="ofertas-sub">Promociones destacadas con precio especial</p><hr class="linea-roja"><div id="offers" class="offer-grid"></div></section>
-<section class="card"><div class="section-title"><div><h2>⭐ Productos destacados</h2><p class="muted">Productos seleccionados para comprar rápido.</p></div><a href="productos.html" class="btn btn-outline">Ver catálogo completo</a></div><div id="featured" class="product-grid"></div></section>
-<section class="card"><div class="section-title"><div><h2>Catálogo rápido</h2><p class="muted">Buscá y agregá productos al carrito.</p></div></div><div id="products" class="product-grid"></div></section>
-</main><script src="js/app.js"></script></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>NDB Sanitarios | Distribuidora Mayorista</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <div class="promo-bar">Precios mayoristas · Atención personalizada · Pedidos online</div>
+  <header class="header">
+    <div class="topbar">
+      <button class="hamb" onclick="toggleMobile()" aria-label="Abrir menú">☰</button>
+      <a class="brand" href="index.html">
+        <img src="img/logo-completo.jpg" alt="NDB Sanitarios">
+        <div class="brand-copy"><strong>NDB Sanitarios</strong><span>Distribuidora Mayorista</span></div>
+      </a>
+      <div class="search"><input id="search" placeholder="Buscar producto, código o marca..." oninput="renderProducts()"><button aria-label="Buscar">⌕</button></div>
+      <div class="actions"><a href="productos.html" class="btn btn-light">Catálogo</a><a href="login.html" class="btn btn-light">Mi cuenta</a><a href="carrito.html" class="btn btn-red cart-link">Carrito <span class="cart-count">0</span></a></div>
+    </div>
+  </header>
+  <div id="mobileMenu" class="mobile-menu"><div class="mobile-panel"><button class="btn btn-red" onclick="toggleMobile()">Cerrar ×</button><a href="index.html">Inicio</a><a href="productos.html">Catálogo</a><a href="carrito.html">Carrito</a><a href="login.html">Mi cuenta</a></div></div>
+
+  <main class="container home-main">
+    <section class="hero-clean">
+      <div class="hero-copy">
+        <span class="eyebrow">DISTRIBUIDORA MAYORISTA</span>
+        <h1>Todo para sanitarios, en un pedido simple.</h1>
+        <p>Consultá el catálogo y armá tu pedido mayorista. Sin pagos online y con atención personalizada.</p>
+        <div class="hero-actions"><a class="btn btn-red btn-lg" href="productos.html">▦ Ver catálogo</a><a class="btn btn-ghost btn-lg" href="login.html">♙ Ingresar</a></div>
+      </div>
+      <div class="hero-visual"><img src="img/logo-completo.jpg" alt="NDB Sanitarios Distribuidora Mayorista"></div>
+    </section>
+
+    <section class="quick-grid">
+      <a class="quick-card" href="productos.html"><span class="quick-icon">▤</span><div><b>Catálogo completo</b><small>Marcas y categorías ordenadas</small></div></a>
+      <a class="quick-card" href="carrito.html"><span class="quick-icon">▱</span><div><b>Pedido simple</b><small>Rápido y sin complicaciones</small></div></a>
+      <a class="quick-card" href="https://wa.me/5491126127218" target="_blank" rel="noopener"><span class="quick-icon">◉</span><div><b>Atención personalizada</b><small>WhatsApp 11 2612-7218</small></div></a>
+      <a class="quick-card" href="login.html"><span class="quick-icon">♙</span><div><b>Acceso clientes</b><small>Iniciá sesión para realizar pedidos</small></div></a>
+    </section>
+
+    <section class="section-card ofertas-home">
+      <div class="section-head"><div><span class="eyebrow">PROMOCIONES</span><h2>Ofertas destacadas</h2><p>Podés consultar productos, precios y promociones sin iniciar sesión. Para comprar, ingresá como cliente.</p></div><a href="productos.html" class="text-link">Ver catálogo →</a></div>
+      <div id="offers" class="offer-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-features">
+      <div class="footer-feature"><i>♢</i><div><b>Compra segura</b><small>Protegemos tus datos</small></div></div>
+      <div class="footer-feature"><i>✓</i><div><b>Catálogo actualizado</b><small>Información de productos</small></div></div>
+      <div class="footer-feature"><i>▱</i><div><b>Pedidos simples</b><small>Sin pagos en la web</small></div></div>
+      <div class="footer-feature"><i>◉</i><div><b>Asesoramiento personalizado</b><small>Estamos para ayudarte</small></div></div>
+    </div>
+    <div class="container footer-bottom"><span>© 2026 NDB Sanitarios · Distribuidora Mayorista</span><span>Todos los derechos reservados</span></div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script><script src="js/firebase.js"></script><script src="js/app.js"></script>
+</body>
+</html>

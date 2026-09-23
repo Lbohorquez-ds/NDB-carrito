@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function userPath() { return /databases/$(database)/documents/usuarios/$(request.auth.uid); }
+    function isAdmin() { return signedIn() && exists(userPath()) && get(userPath()).data.rol == 'admin' && get(userPath()).data.active == true; }
+    function isClient() { return signedIn() && exists(userPath()) && get(userPath()).data.rol == 'cliente' && get(userPath()).data.active == true; }
+    function str(v,n) { return v is string && v.size() <= n; }
+    function money(v) { return v is number && v >= 0 && v <= 1000000000; }
+
+    match /usuarios/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      // Necesario en Spark para crear el perfil inmediatamente después de crear la cuenta Auth.
+      // La regla impide crear administradores o perfiles de terceros.
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['business_name','nombre','email','phone','address','neighborhood','city','discount_percent','rol','active','createdAt','updatedAt'])
+        && request.resource.data.rol == 'cliente' && request.resource.data.active == true
+        && request.resource.data.email == request.auth.token.email
+        && str(request.resource.data.business_name,120) && str(request.resource.data.nombre,120)
+        && str(request.resource.data.phone,40) && str(request.resource.data.address,180)
+        && str(request.resource.data.neighborhood,100) && str(request.resource.data.city,100)
+        && request.resource.data.discount_percent is number && request.resource.data.discount_percent >= 0 && request.resource.data.discount_percent <= 100
+        && request.resource.data.createdAt == request.time && request.resource.data.updatedAt == request.time;
+      allow update: if isAdmin() || (isClient() && request.auth.uid == uid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['business_name','nombre','phone','address','neighborhood','city','updatedAt'])
+        && request.resource.data.rol == resource.data.rol && request.resource.data.email == resource.data.email
+        && request.resource.data.discount_percent == resource.data.discount_percent && request.resource.data.active == resource.data.active
+        && request.resource.data.updatedAt == request.time);
+      allow delete: if false;
+    }
+
+    match /productos/{id} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /pedidos/{id} {
+      allow read: if isAdmin() || (isClient() && resource.data.clienteUid == request.auth.uid);
+      allow create: if isClient()
+        && request.resource.data.keys().hasOnly(['numero','clienteUid','cliente','items','total','estado','observaciones','createdAt','updatedAt'])
+        && request.resource.data.clienteUid == request.auth.uid && request.resource.data.estado == 'pendiente'
+        && str(request.resource.data.numero,40) && str(request.resource.data.observaciones,1000)
+        && request.resource.data.items is list && request.resource.data.items.size() > 0 && request.resource.data.items.size() <= 100
+        && money(request.resource.data.total)
+        && request.resource.data.createdAt == request.time && request.resource.data.updatedAt == request.time;
+      allow update: if isAdmin() || (isClient() && resource.data.clienteUid == request.auth.uid
+        && resource.data.estado == 'pendiente' && request.resource.data.estado == 'cancelado'
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['estado','updatedAt'])
+        && request.resource.data.updatedAt == request.time);
+      allow delete: if isAdmin();
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}
