@@ -1,5 +1,27 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Productos - B&P</title><link rel="stylesheet" href="css/estilos.css"></head><body>
-<div class="promo-bar">📦 Stock actualizado por administración</div>
-<header class="header"><div class="topbar"><button class="hamb" onclick="toggleMobile()">☰</button><a class="brand" href="index.html"><img src="img/logo.jpeg"><div><h1>B&P Sanitarios</h1><small>Productos</small></div></a><div class="search"><input id="search" placeholder="Buscar productos..." oninput="renderProducts()"><button>⌕</button></div><div class="actions"><a href="login.html" class="btn btn-light">Mi cuenta</a><a href="carrito.html" class="btn btn-red cart-link">🛒 <span class="cart-count">0</span></a></div></div></header>
-<div id="mobileMenu" class="mobile-menu"><div class="mobile-panel"><button class="btn btn-red" onclick="toggleMobile()">Cerrar ×</button><a href="index.html">Inicio</a><a href="productos.html">Productos</a><a href="carrito.html">Carrito</a><a href="login.html">Mi cuenta</a></div></div>
-<main class="container"><div class="layout"><aside class="card side"><h2>Secciones</h2><br><div id="cats"></div></aside><section class="card"><div class="section-title"><div><h2>Todos los productos</h2><p class="muted">El cliente puede comprar solo si hay stock.</p></div></div><hr class="linea-roja"><div id="products" class="product-grid"></div></section></div></main><script src="js/app.js"></script></body></html>
+<!doctype html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff"><title>Catálogo | NDB Sanitarios</title><link rel="stylesheet" href="css/estilos.css"></head>
+<body>
+  <div class="promo-bar">Catálogo mayorista · Pedidos online · Atención personalizada</div>
+  <header class="header"><div class="topbar"><button class="hamb" onclick="toggleMobile()">☰</button><a class="brand" href="index.html"><img src="img/logo-completo.jpg" alt="NDB Sanitarios"><div class="brand-copy"><strong>NDB Sanitarios</strong><span>Catálogo</span></div></a><div class="search"><input id="search" placeholder="Buscar nombre, código o marca" oninput="renderProducts()"><button>⌕</button></div><div class="actions"><a href="login.html" class="btn btn-light">Mi cuenta</a><a href="carrito.html" class="btn btn-red cart-link">Carrito <span class="cart-count">0</span></a></div></div></header>
+  <div id="mobileMenu" class="mobile-menu"><div class="mobile-panel"><button class="btn btn-red" onclick="toggleMobile()">Cerrar ×</button><a href="index.html">Inicio</a><a href="productos.html">Catálogo</a><a href="carrito.html">Carrito</a><a href="login.html">Mi cuenta</a></div></div>
+
+  <main class="container catalog-page">
+    <div class="catalog-heading"><div><span class="eyebrow">CATÁLOGO NDB</span><h1>Productos</h1><p>Filtrá por marca o categoría y encontrá lo que necesitás.</p></div><a href="carrito.html" class="btn btn-outline">Ver carrito</a></div>
+
+    <section class="filter-panel">
+      <div class="filter-row">
+        <div class="filter-group"><label for="brandFilter">Marca</label><select id="brandFilter" class="field" onchange="renderProducts()"><option value="Todas">Todas las marcas</option></select></div>
+        <div class="filter-group"><label for="categoryFilter">Categoría</label><select id="categoryFilter" class="field" onchange="renderProducts()"><option value="Todos">Todas las categorías</option></select></div>
+        <label class="stock-check"><input id="stockFilter" type="checkbox" onchange="renderProducts()"><span>Solo con stock</span></label>
+      </div>
+    </section>
+
+    <section class="section-card catalog-results"><div class="section-head"><div><h2>Catálogo</h2><p>Consultá libremente productos y precios. Solo necesitás iniciar sesión si querés agregar productos al carrito.</p></div></div><div id="products" class="product-grid"></div></section>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script><script src="js/firebase.js"></script><script src="js/app.js"></script>
+</body></html>

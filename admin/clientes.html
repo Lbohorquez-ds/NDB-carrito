@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>Clientes | Administración NDB</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+<header class="header">
+  <div class="topbar">
+    <a class="brand" href="presupuestos.html"><img src="../img/logo-completo.jpg" alt="NDB"><div><h1>NDB Sanitarios</h1><small>Administración</small></div></a>
+    <button class="btn btn-red" onclick="logout()">Cerrar sesión</button>
+  </div>
+</header>
+<main class="container">
+  <div class="layout admin-layout">
+    <aside class="card side">
+      <a href="presupuestos.html">Pedidos y resumen</a>
+      <a href="productos.html">Productos</a>
+      <a class="active" href="clientes.html">Clientes</a>
+      
+    </aside>
+    <section class="card">
+      <div class="section-title admin-page-title"><div><span class="admin-kicker">GESTIÓN DE CLIENTES</span><h2>Clientes</h2><p class="muted">Creá clientes, buscá sus datos y administrá su acceso desde un mismo lugar.</p></div></div>
+      <div class="admin-create-box">
+        <h3>Agregar cliente</h3><p class="muted">La cuenta se crea directamente desde este panel. No hace falta entrar a Firebase.</p>
+        <div class="admin-form-grid">
+          <input id="newClientBusiness" class="field" placeholder="Razón social *">
+          <input id="newClientName" class="field" placeholder="Nombre y apellido">
+          <input id="newClientEmail" class="field" type="email" autocomplete="off" placeholder="Email *">
+          <input id="newClientPassword" class="field" type="password" minlength="8" autocomplete="new-password" placeholder="Contraseña inicial * (mín. 8)">
+          <input id="newClientPhone" class="field" placeholder="Teléfono">
+          <input id="newClientCity" class="field" placeholder="Localidad">
+          <input id="newClientDiscount" class="field" type="number" min="0" max="100" step="0.01" value="0" placeholder="Descuento %">
+        </div>
+        <button id="createClientBtn" class="btn btn-red" onclick="createClient()">+ Agregar cliente</button>
+      </div>
+      <hr class="linea-roja">
+      <div class="admin-client-tools">
+        <div>
+          <label for="adminClientSearch">Buscar cliente</label>
+          <input id="adminClientSearch" class="field" placeholder="Nombre, razón social, email o teléfono" oninput="paintAdminClients()">
+        </div>
+        <div>
+          <label for="adminClientSort">Ordenar</label>
+          <select id="adminClientSort" class="field" onchange="paintAdminClients()">
+            <option value="name-asc">Nombre A–Z</option>
+            <option value="name-desc">Nombre Z–A</option>
+            <option value="recent">Más recientes</option>
+          </select>
+        </div>
+      </div>
+      <div id="adminClients" class="admin-client-list"></div>
+    </section>
+  </div>
+</main>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script src="../js/config.js"></script><script src="../js/firebase.js"></script><script src="../js/app.js"></script>
+</body>
+</html>

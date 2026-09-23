@@ -1,3 +1,17 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Carrito - B&P</title><link rel="stylesheet" href="css/estilos.css"></head><body>
-<header class="header"><div class="topbar"><a class="brand" href="index.html"><img src="img/logo.jpeg"><div><h1>B&P Sanitarios</h1><small>Carrito</small></div></a><div class="actions"><a href="productos.html" class="btn btn-light">Seguir comprando</a><a href="login.html" class="btn btn-red">Mi cuenta</a></div></div></header>
-<main class="container"><section class="card"><h2>Tu carrito</h2><p class="muted">Revisá cantidades antes de generar el presupuesto.</p><br><div id="cartItems"></div><div class="total"><span>Total</span><span id="cartTotal">$0</span></div><textarea id="obs" class="field" rows="4" placeholder="Observaciones para el presupuesto"></textarea><button class="btn btn-red" onclick="makeQuote()">Generar presupuesto</button> <button class="btn btn-light" onclick="clearCart()">Vaciar carrito</button></section></main><script src="js/app.js"></script></body></html>
+<!doctype html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff"><title>Carrito | NDB Sanitarios</title><link rel="stylesheet" href="css/estilos.css"></head>
+<body>
+<header class="header"><div class="topbar"><button class="hamb" onclick="toggleMobile()">☰</button><a class="brand" href="index.html"><img src="img/logo-completo.jpg" alt="NDB Sanitarios"><div class="brand-copy"><strong>NDB Sanitarios</strong><span>Tu pedido</span></div></a><div class="header-spacer"></div><div class="actions"><a href="productos.html" class="btn btn-light">Seguir comprando</a><a href="login.html" class="btn btn-red">Mi cuenta</a></div></div></header>
+<div id="mobileMenu" class="mobile-menu"><div class="mobile-panel"><button class="btn btn-red" onclick="toggleMobile()">Cerrar ×</button><a href="index.html">Inicio</a><a href="productos.html">Catálogo</a><a href="carrito.html">Carrito</a><a href="login.html">Mi cuenta</a></div></div>
+<main class="container cart-page">
+  <div class="catalog-heading"><div><span class="eyebrow">TU PEDIDO</span><h1>Carrito</h1><p>Revisá cantidades antes de confirmar.</p></div></div>
+  <div class="cart-layout">
+    <section class="section-card cart-products"><div id="cartItems"></div></section>
+    <aside class="section-card cart-summary"><h2>Resumen</h2><div class="total"><span>Total</span><span id="cartTotal">$ 0,00</span></div><label for="obs">Observaciones</label><textarea id="obs" class="field" rows="4" placeholder="Aclaraciones para NDB"></textarea><button id="confirmOrderBtn" class="btn btn-red full-btn" onclick="makeOrder()">Confirmar pedido</button><button class="btn btn-light full-btn" onclick="clearCart()">Vaciar carrito</button><p class="fineprint">Al confirmar se guarda el pedido y se descarga el PDF. No se realizan pagos desde la web.</p></aside>
+  </div>
+</main>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script><script src="js/config.js"></script><script src="js/firebase.js"></script><script src="js/app.js"></script><script>window.addEventListener('DOMContentLoaded',loadProducts)</script>
+</body></html>

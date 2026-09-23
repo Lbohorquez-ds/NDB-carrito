@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>Productos | Administración NDB</title>
+  <link rel="stylesheet" href="../css/estilos.css">
+</head>
+<body>
+<header class="header">
+  <div class="topbar">
+    <a class="brand" href="presupuestos.html"><img src="../img/logo-completo.jpg" alt="NDB"><div><h1>NDB Sanitarios</h1><small>Administración</small></div></a>
+    <button class="btn btn-red" onclick="logout()">Cerrar sesión</button>
+  </div>
+</header>
+<main class="container">
+  <div class="layout admin-layout">
+    <aside class="card side">
+      <a href="presupuestos.html">Pedidos y resumen</a>
+      <a class="active" href="productos.html">Productos</a>
+      <a href="clientes.html">Clientes</a>
+      
+    </aside>
+    <section class="card">
+      <div class="section-title"><div><h2>Productos</h2><p class="muted">Cargá productos con foto, precio, stock, marca y categoría.</p></div></div>
+      <div class="admin-create-box">
+        <h3>Agregar producto</h3>
+        <div class="admin-form-grid">
+          <input id="newProductCode" class="field" placeholder="Código *">
+          <input id="newProductName" class="field" placeholder="Nombre del producto *">
+          <select id="newProductBrand" class="field"></select>
+          <select id="newProductCategory" class="field"></select>
+          <input id="newProductPrice" class="field" type="number" min="0" step="0.01" placeholder="Precio *">
+          <input id="newProductStock" class="field" type="number" min="0" step="1" placeholder="Stock *">
+          <input id="newProductMinStock" class="field" type="number" min="0" step="1" placeholder="Stock mínimo">
+          <input id="newProductPreviousPrice" class="field" type="number" min="0" step="0.01" placeholder="Precio anterior (opcional)">
+          <div class="admin-span-2 image-upload-box">
+            <label for="newProductImage" class="upload-label">Foto del producto</label>
+            <input id="newProductImage" class="file-input" type="file" accept="image/*" onchange="previewProductImage(this)">
+            <div class="upload-help">Elegí una foto desde tu computadora o celular. La página la optimiza automáticamente antes de guardarla.</div>
+            <div id="newProductImagePreviewWrap" class="image-preview-wrap hidden"><img id="newProductImagePreview" alt="Vista previa de la foto"><button type="button" class="btn btn-light btn-small" onclick="clearProductImage()">Quitar foto</button></div>
+          </div>
+          <textarea id="newProductDescription" class="field admin-span-2" rows="3" placeholder="Descripción (opcional)"></textarea>
+        </div>
+        <div class="check-row"><label><input id="newProductSale" type="checkbox"> Oferta</label></div>
+        <button id="createProductBtn" class="btn btn-red" onclick="createAdminProduct()">+ Agregar producto</button>
+      </div>
+      <hr class="linea-roja">
+      <div class="catalog-pdf-box">
+        <div class="catalog-pdf-copy">
+          <span class="catalog-pdf-kicker">CATÁLOGO</span>
+          <h3>Generar catálogo PDF</h3>
+          <p class="muted">Crea un PDF con varios productos por hoja, listo para imprimir o compartir.</p>
+        </div>
+        <div class="catalog-pdf-controls">
+          <div>
+            <label for="catalogGroupBy">Ordenar / agrupar por</label>
+            <select id="catalogGroupBy" class="field">
+              <option value="brand-category">Marca + categoría</option>
+              <option value="brand">Solo marca</option>
+              <option value="category">Solo categoría</option>
+            </select>
+          </div>
+          <div>
+            <label for="catalogPerPage">Productos por hoja</label>
+            <select id="catalogPerPage" class="field">
+              <option value="12" selected>12 productos por hoja</option>
+            </select>
+          </div>
+          <label class="catalog-price-check"><input id="catalogShowPrices" type="checkbox" checked> Mostrar precios</label>
+          <button id="catalogPdfBtn" class="btn btn-red" onclick="downloadCatalogPdf()">Generar PDF</button>
+        </div>
+      </div>
+      <hr class="linea-roja">
+      <div class="admin-product-tools">
+        <div><label for="adminProductSearch">Buscar producto</label><input id="adminProductSearch" class="field" placeholder="Nombre o código..." oninput="paintAdminProducts()"></div>
+        <div><label for="adminProductSort">Ordenar</label><select id="adminProductSort" class="field" onchange="paintAdminProducts()"><option value="name-asc">Nombre A–Z</option><option value="name-desc">Nombre Z–A</option><option value="code-asc">Código</option></select></div>
+      </div>
+      <div id="adminProducts" class="admin-products-grid"></div>
+    </section>
+  </div>
+</main>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="../js/config.js"></script><script src="../js/firebase.js"></script><script src="../js/app.js"></script>
+</body>
+</html>

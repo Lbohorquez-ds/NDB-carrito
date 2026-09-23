@@ -1,1 +1,45 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Login - B&P</title><link rel="stylesheet" href="css/estilos.css"></head><body><main class="container"><section class="card login"><img src="img/logo.jpeg"><h2>Inicio de sesión</h2><p class="muted">Ingresá como cliente o administrador.</p><br><select id="rol" class="field"><option value="cliente">Cliente</option><option value="admin">Administrador</option></select><input id="user" class="field" placeholder="Usuario"><input id="pass" class="field" type="password" placeholder="Contraseña"><button class="btn btn-red" style="width:100%" onclick="doLogin()">Ingresar</button><br><br><p class="muted">Cliente: <b>cliente</b> / 1234<br>Admin: <b>admin</b> / 1234</p><br><a href="index.html">Volver al inicio</a></section></main><script>function doLogin(){let rol=document.getElementById('rol').value,u=document.getElementById('user').value,p=document.getElementById('pass').value;if((rol==='cliente'&&u==='cliente'&&p==='1234')||(rol==='admin'&&u==='admin'&&p==='1234')){localStorage.setItem('bp_user',JSON.stringify({username:u,rol}));location.href=rol==='cliente'?'cliente/inicio.html':'admin/presupuestos.html'}else alert('Usuario o contraseña incorrectos')}</script></body></html>
+<!doctype html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff"><title>Ingresar | NDB Sanitarios</title><link rel="stylesheet" href="css/estilos.css"></head>
+<body id="loginPage">
+  <div class="promo-bar">Precios mayoristas · Atención personalizada · Pedidos online</div>
+  <header class="header">
+    <div class="topbar">
+      <a class="brand" href="index.html"><img src="img/logo-completo.jpg" alt="NDB Sanitarios"><div class="brand-copy"><strong>NDB Sanitarios</strong><span>Distribuidora Mayorista</span></div></a>
+      <div class="header-spacer"></div>
+      <div class="actions"><a href="productos.html" class="btn btn-light">Catálogo</a><a href="index.html" class="btn btn-red">Inicio</a></div>
+    </div>
+  </header>
+
+  <main class="container login-page-wrap">
+    <section class="login-shell">
+      <img class="login-logo" src="img/logo-completo.jpg" alt="NDB Sanitarios">
+      <h2>Inicio de sesión</h2>
+      <p class="muted">Acceso exclusivo para clientes y administración.</p>
+      <div class="login-form">
+        <input id="email" class="field" type="email" autocomplete="email" placeholder="Email">
+        <input id="pass" class="field" type="password" autocomplete="current-password" placeholder="Contraseña">
+        <button id="loginBtn" class="btn btn-red full-btn" onclick="doLogin()">🔒 Ingresar</button>
+        <div id="loginError" class="login-error" hidden></div>
+      </div>
+      <div class="login-separator"><span>ACCESO NDB</span></div>
+      <p class="login-note">Las cuentas se administran desde NDB. No hay registro público.</p>
+      <a class="back-home" href="index.html">← Volver al inicio</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-features">
+      <div class="footer-feature"><i>♢</i><div><b>Compra segura</b><small>Protegemos tus datos</small></div></div>
+      <div class="footer-feature"><i>✓</i><div><b>Catálogo actualizado</b><small>Información de productos</small></div></div>
+      <div class="footer-feature"><i>▱</i><div><b>Pedidos simples</b><small>Sin pagos en la web</small></div></div>
+      <div class="footer-feature"><i>◉</i><div><b>Asesoramiento personalizado</b><small>Estamos para ayudarte</small></div></div>
+    </div>
+    <div class="container footer-bottom"><span>© 2026 NDB Sanitarios · Distribuidora Mayorista</span><span>Todos los derechos reservados</span></div>
+  </footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script src="js/config.js"></script><script src="js/firebase.js"></script><script src="js/app.js"></script>
+</body></html>
